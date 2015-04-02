@@ -1,0 +1,82 @@
+<html>
+    <head>
+        <title>Bubble Demo</title>
+        <style type="text/css">
+            html, body {
+                margin: 0;
+                padding: 0;
+            }
+        </style>
+        <script type="text/javascript" src="../general/bb.js"></script>
+        <script type="text/javascript" src="../general/shapes.js"></script>
+        <script type="text/javascript" src="../general/colors.js"></script>
+        <script type="text/javascript" src="../general/math.js"></script>
+        <script type="text/javascript" src="../general/animation.js"></script>
+        <script type="text/javascript" src="../particles/particleWorld.js"></script>
+        <script type="text/javascript" src="../particles/particles.js"></script>
+        <script type="text/javascript" src="../particles/hypervoxels.js"></script>
+        <script type="text/javascript" src="../tank/tank.js"></script>
+        <script type="text/javascript" src="../tank/fish.js"></script>
+        <script type="text/javascript">
+            window.onload = function()
+            {
+                var canvas = document.getElementById('canvas');
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                
+                BB.fps = 15;
+
+                var tank = new BBTank();
+                tank.init(canvas);
+                tank.draw();
+
+                var f = new BBFish();
+                f.init();
+                f.setX(700);
+                f.setY(400);
+                f.width = 200;
+                f.height = 100;
+                f.leftFacingImage.src = "images/left_red_yellow_fish.png";
+                f.rightFacingImage.src = "images/right_red_yellow_fish.png";
+                tank.addFish(f);
+
+                alert('hi');
+            /*    
+                var moves = [
+                    new BBPoint(0, 200),
+                    new BBPoint(500, 100),
+                    new BBPoint(500, 200),
+                    new BBPoint(200, 500),
+                    new BBPoint(0, 0),
+                    new BBPoint(700, 10)
+                ];
+                
+                var g = new BBFish();
+                g.init();
+                g.setX(400);
+                g.setY(400);
+                g.width = 300;
+                g.height = 150;
+                g.leftFacingImage.src = "images/left_blue_green_fish.png";
+                g.rightFacingImage.src = "images/right_blue_green_fish.png";
+                tank.addFish(g);
+                
+                for (var i = 0; i < moves.length; i++) {
+                    g.moveTo(moves[i].x, moves[i].y, 5000);
+                }
+
+                canvas.onclick = function()
+                {
+                    if (tank.bubbleWorld.isPlaying) {
+                        tank.bubbleWorld.pause();
+                    } else {
+                        tank.bubbleWorld.play();
+                    }
+                }
+            */}
+        </script>
+    </head>
+    <body>
+        <canvas id="canvas" width="1000" height="500"></canvas>
+    </body>
+</html>

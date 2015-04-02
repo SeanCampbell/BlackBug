@@ -1,0 +1,65 @@
+<html>
+    <head>
+        <title>BlackBug Test Page</title>
+        <script type="text/javascript" src="general/bb.js"></script>
+        <script type="text/javascript" src="general/animation.js"></script>
+        <script type="text/javascript" src="general/math.js"></script>
+        <script type="text/javascript" src="general/shapes.js"></script>
+        <script type="text/javascript" src="general/colors.js"></script>
+        <script type="text/javascript" src="particles/particles.js"></script>
+        <script type="text/javascript" src="particles/hypervoxels.js"></script>
+        <script type="text/javascript" src="particles/particleWorld.js"></script>
+        <script type="text/javascript">
+            <!--
+            var ctx;
+            var world;
+            
+            window.onload = function()
+            {
+                BB.fps = 30;
+                
+                var canvas = document.getElementById('canvas');
+                ctx = canvas.getContext('2d');
+                // Create the world. For a list of properties
+                // you can set, see the documentation.
+                world = new BBParticleWorld();
+
+                // Create a particle emitter.
+                var emitter = new BBParticleEmitter();
+                // Change some properties. To see all properties
+                // you can change, see the documentation.
+                emitter.x = 300;
+                emitter.y = 300;
+                emitter.width = 100;
+                emitter.height = 100;
+            
+                // Add the emitter to the world.
+                world.addEmitter(emitter);
+            
+                // Create hyper voxels.
+                var hv = new BBHyperVoxelSystem();
+                // Set the emitter so that the hyper
+                // voxels will be rendered where the
+                // particles from the emitter are.
+                // For a complete list of properties
+                // you can change, see the documentation.
+                hv.emitter = emitter;
+            
+                // Add the emitter to the world.
+                world.addHyperVoxels(hv);
+
+                setInterval(advance, 1000 / BB.fps);
+            }
+            
+            function advance()
+            {
+                world.step();
+                world.draw(ctx);
+            }
+            //-->
+        </script>
+    </head>
+    <body>
+        <canvas id="canvas" width="700" height="500" style="border: 1px solid black">Your browser does not support the canvas element.</canvas>
+    </body>
+</html>

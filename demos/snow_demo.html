@@ -1,0 +1,126 @@
+<html>
+    <head>
+        <title>Snow Demo</title>
+        <style type="text/css">
+            html, body {
+                margin: 0;
+                padding: 0;
+            }
+        </style>
+        <script type="text/javascript" src="../general/bb.js"></script>
+        <script type="text/javascript" src="../general/shapes.js"></script>
+        <script type="text/javascript" src="../general/colors.js"></script>
+        <script type="text/javascript" src="../general/math.js"></script>
+        <script type="text/javascript" src="../particles/particleWorld.js"></script>
+        <script type="text/javascript" src="../particles/particles.js"></script>
+        <script type="text/javascript" src="../particles/hypervoxels.js"></script>
+        <script type="text/javascript">
+            var canvas;
+            var ctx;
+            
+            window.addEventListener("load", function()
+            {
+                canvas = document.getElementById('canvas');
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                
+                window.addEventListener("resize", function() {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                });
+            
+                ctx = canvas.getContext('2d');
+                
+                var world = new BBParticleWorld();
+                BB.fps = 15;
+                
+                var emitter = new BBParticleEmitter();
+                emitter.width = canvas.width;
+                emitter.height = 100;
+                emitter.particleYAcceleration = 20;
+                emitter.y = - emitter.height;
+                emitter.particleSpeed = 200;
+                emitter.particleSpeedRange = 100;
+                emitter.particleDirection = 90;
+                emitter.particleDirectionRange = 5;
+                emitter.maxParticles = 1000;
+                emitter.birthrate = 100;
+                
+                emitter.particleLifetime = 10;
+                emitter.particleLifetimeRange = 3;
+                world.addEmitter(emitter);
+
+                var hv = new BBHyperVoxelSystem();
+                hv.emitter = emitter;
+                hv.shape = "octagon";
+                hv.lowColor = new BBRGBA(100, 255, 255, 0.9);
+                hv.highColor = new BBRGBA(200, 255, 255, 0.9);
+                hv.inputParameter = "speed()";
+                hv.radius = 3;
+                world.addHyperVoxels(hv);
+                
+                var advance = function() {
+                    draw();
+                    world.step();
+                    world.draw(ctx);
+                }
+
+                setInterval(advance, 1000 / BB.fps);
+            });
+
+            function draw()
+            {
+                ctx.fillStyle = "blue";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.fillStyle = "white";
+                ctx.strokeStyle = "black";
+                ctx.fillRect(0, canvas.height - 150, canvas.width, 150);
+
+                drawSnowman();
+            }
+            
+            function drawSnowman()
+            {
+                ctx.strokeStyle = "brown";
+                ctx.lineWidth = 10;
+
+                ctx.beginPath();
+                ctx.moveTo(200, canvas.height - 260);
+                ctx.lineTo(20, canvas.height - 280);
+                ctx.closePath();
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(200, canvas.height - 260);
+                ctx.lineTo(400, canvas.height - 280);
+                ctx.closePath();
+                ctx.stroke();
+
+                ctx.lineWidth = 1;
+                
+                ctx.fillStyle = "white";
+                BBShapes.shouldStroke = true;
+                BBShapes.drawCircle(ctx, 200, canvas.height - 150, 100);
+                BBShapes.drawCircle(ctx, 200, canvas.height - 260, 80);
+                BBShapes.drawCircle(ctx, 200, canvas.height - 360, 60);
+                
+                ctx.fillStyle = "orange";
+                ctx.beginPath();
+                ctx.closePath();
+                ctx.moveTo(210, canvas.height - 354);
+                ctx.lineTo(210, canvas.height - 314);
+                ctx.lineTo(180, canvas.height - 349);
+                ctx.lineTo(210, canvas.height - 354);
+                ctx.fill();
+                
+                ctx.fillStyle = "black";
+                BBShapes.drawCircle(ctx, 180, canvas.height - 380, 10);
+                BBShapes.drawCircle(ctx, 230, canvas.height - 380, 10);
+            }
+        </script>
+    </head>
+    <body>
+        <canvas id="canvas" width="500" height="500"></canvas>
+    </body>
+</html>
