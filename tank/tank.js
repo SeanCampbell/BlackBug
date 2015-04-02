@@ -38,6 +38,10 @@ function BBTank()
         // Create the ground.
         this.ground = new Image();
         this.ground.src = "images/pebbles.png";
+
+        // Create the particle world for the bubbles.
+        this.bubbleWorld = new BBParticleWorld();
+
     }
     
     /**
@@ -56,6 +60,9 @@ function BBTank()
         for (var i = 0; i < this.fish.length; i++) {
             this.fish[i].draw(this.ctx);
         }
+
+        this.bubbleWorld.step();
+        this.bubbleWorld.draw(this.ctx);
     }
     
     /**
@@ -64,17 +71,6 @@ function BBTank()
      */
     this.addFish = function(fish)
     {
-        // If this is the first fish, set up the particle world.
-        if (this.fish.length == 0) {
-            // Create and initiate.
-            this.bubbleWorld = new BBParticleWorld();
-            this.bubbleWorld.init(this.canvas);
-            
-            // Sets the particle world's scene to be this tank.
-            var self = this;
-            this.bubbleWorld.drawScene = function() { self.draw() };
-        }
-        
         // Add fish to fish list and add its bubble emitter
         // and hyper voxels to the particle world.
         this.fish.push(fish);

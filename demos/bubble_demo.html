@@ -18,35 +18,39 @@
         <script type="text/javascript" src="../tank/tank.js"></script>
         <script type="text/javascript" src="../tank/fish.js"></script>
         <script type="text/javascript">
-            window.onload = function()
-            {
+            window.addEventListener("load", function() {
+
                 var canvas = document.getElementById('canvas');
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
+
+                window.addEventListener("resize", function() {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                });
                 
                 BB.fps = 15;
 
                 var tank = new BBTank();
                 tank.init(canvas);
-                tank.draw();
+
+                setInterval(function() { tank.draw(); }, 1000 / BB.fps);
 
                 var f = new BBFish();
                 f.init();
                 f.setX(700);
-                f.setY(400);
+                f.setY(canvas.height - 200);
                 f.width = 200;
                 f.height = 100;
                 f.leftFacingImage.src = "images/left_red_yellow_fish.png";
                 f.rightFacingImage.src = "images/right_red_yellow_fish.png";
                 tank.addFish(f);
 
-                alert('hi');
-            /*    
                 var moves = [
-                    new BBPoint(0, 200),
-                    new BBPoint(500, 100),
-                    new BBPoint(500, 200),
-                    new BBPoint(200, 500),
+                    new BBPoint(0, canvas.height - 400),
+                    new BBPoint(500, canvas.height - 500),
+                    new BBPoint(500, canvas.height - 400),
+                    new BBPoint(200, canvas.height - 100),
                     new BBPoint(0, 0),
                     new BBPoint(700, 10)
                 ];
@@ -54,7 +58,7 @@
                 var g = new BBFish();
                 g.init();
                 g.setX(400);
-                g.setY(400);
+                g.setY(canvas.height - 200);
                 g.width = 300;
                 g.height = 150;
                 g.leftFacingImage.src = "images/left_blue_green_fish.png";
@@ -73,7 +77,7 @@
                         tank.bubbleWorld.play();
                     }
                 }
-            */}
+            });
         </script>
     </head>
     <body>
